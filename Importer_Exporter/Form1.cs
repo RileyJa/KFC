@@ -132,6 +132,7 @@ namespace Importer_Exporter
                                 byte[] bit = new byte[8];
 
 
+
                                 while (fs.Read(bit, 0, bit.Length) > 0)
                                 {
                                     sb.Append(Encoding.Default.GetString(bit));
