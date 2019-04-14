@@ -81,7 +81,7 @@ namespace Importer_Exporter
             }
             catch (Exception)
             {
-                MessageBox.Show("Каталог не обнаружен");
+                MessageBox.Show("Каталог не обнаружен \nИзмените Каталог в настройках","",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
         //Чтение из Каталоа

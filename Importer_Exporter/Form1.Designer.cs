@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnWrite = new System.Windows.Forms.Button();
             this.btnRead = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -162,6 +163,7 @@
             this.Controls.Add(this.btnRead);
             this.Controls.Add(this.btnWrite);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.panel1.ResumeLayout(false);
