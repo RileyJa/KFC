@@ -117,38 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="logo_site (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logo_site (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="32-326863_kfc-logo-clipart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\32-326863_kfc-logo-clipart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="14969" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\14969.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="logo_site" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logo_site2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\images.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="cogwheel_icon-icons.com_70237" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cogwheel_icon-icons.com_70237.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="kisspng-colonel-sanders-kfc-fried-chicken-logo-clip-art-5aeaf963a34ed0.8187879115253487076689" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\kisspng-colonel-sanders-kfc-fried-chicken-logo-clip-art-5aeaf963a34ed0.8187879115253487076689.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="kisspng-x-mark-check-mark-cross-sign-clip-art-x-mark-5ac40246df0502.6028199815227950789135" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\kisspng-x-mark-check-mark-cross-sign-clip-art-x-mark-5ac40246df0502.6028199815227950789135.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="KFC_logo.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\KFC_logo.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="opened_folder-512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\opened_folder-512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

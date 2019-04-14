@@ -63,9 +63,29 @@ namespace Importer_Exporter.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _14969 {
+            get {
+                object obj = ResourceManager.GetObject("14969", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _32_326863_kfc_logo_clipart {
             get {
                 object obj = ResourceManager.GetObject("32-326863_kfc-logo-clipart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cogwheel_icon_icons_com_70237 {
+            get {
+                object obj = ResourceManager.GetObject("cogwheel_icon-icons.com_70237", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -104,6 +124,17 @@ namespace Importer_Exporter.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap kisspng_x_mark_check_mark_cross_sign_clip_art_x_mark_5ac40246df0502_6028199815227950789135 {
+            get {
+                object obj = ResourceManager.GetObject("kisspng-x-mark-check-mark-cross-sign-clip-art-x-mark-5ac40246df0502.6028199815227" +
+                        "950789135", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo {
             get {
                 object obj = ResourceManager.GetObject("logo", resourceCulture);
@@ -127,6 +158,16 @@ namespace Importer_Exporter.Properties {
         internal static System.Drawing.Bitmap logo_site__1_ {
             get {
                 object obj = ResourceManager.GetObject("logo_site (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap opened_folder_512 {
+            get {
+                object obj = ResourceManager.GetObject("opened_folder-512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

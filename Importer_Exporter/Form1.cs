@@ -10,6 +10,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -17,6 +18,7 @@ namespace Importer_Exporter
 {
     public partial class Form1 : Form
     {
+        static string Catalog = null;
         Color Red = Color.FromArgb(163, 8, 12);
         string directory = null;
         string[] storage = new string[2];
@@ -27,69 +29,59 @@ namespace Importer_Exporter
         Font FPrice = new Font("Bahnschrift", 14.0f);
         int ViewTop = 0;
         int ViewLeft = 0;
+        int Padding = 2;
+        int ViewWidth = default;
         bool i = false;
         public Form1()
         {
             InitializeComponent();
             Width = 1500;
             Height = 800;
+            BackColor = Color.White;
             panel2.Dock = DockStyle.Fill;
             panel2.AutoSize = false;
-            panel1.BackColor = Red;
+            panel1.BackColor = ColorTranslator.FromHtml("#ab1d37");
             panel2.Height = Height;
             panel2.Width = Width;
             panel2.HorizontalScroll.Enabled = false;
             panel2.HorizontalScroll.Visible = false;
             panel2.AutoScroll = true;
+            ViewWidth = panel2.Width / 5;
+            ViewWidth -= Padding;
             //MessageBox.Show(Width + "," + panel2.Width);
-            //FastTxt(@"X:\KFC\Меню");
-            Dir(@"X:\KFC\Меню");
+
+            Parallel.Invoke(() => Starter());
+            Width = Width + Padding * 5;
             //MessageBox.Show(Width + "," + panel2.Width + "," + V);
 
 
         }
-        public void FastTxt(string Direc)
+        public void Starter()
         {
-            DirectoryInfo dir = new DirectoryInfo(Direc);
-            foreach (var item in dir.GetDirectories())
+
+            panel2.Controls.Clear();
+            ViewLeft = 0;
+            ViewTop = 0;
+            i = false;
+            StringBuilder sb = new StringBuilder();
+            using (FileStream fs = File.OpenRead("Settings.txt"))
             {
-                var b = item.GetFiles();
-                if (b.Length > 0)
+
+                string s = null;
+                byte[] bit = new byte[32];
+                while (fs.Read(bit, 0, bit.Length) > 0)
                 {
-                    foreach (var i in item.GetFiles())
-                    {
-                        string path = item.FullName + @"\" + i.Name + ".txt";
-                        if (!File.Exists(path))
-                        {
-                            File.Create(path);
-                            if (!File.Exists(path))
-                            {
-                                TextWriter tw = new StreamWriter(path);
-                                tw.WriteLine("name=" + '"' + '"');
-                                tw.WriteLine("image=" + '"' + i.Name + '"');
-                                tw.WriteLine("price=");
-                                tw.Close();
-                            }
-
-                        }
-                        else if (File.Exists(path))
-                        {
-                            TextWriter tw = new StreamWriter(path);
-                            tw.WriteLine("name=" + '"' + '"');
-                            tw.WriteLine("image=" + '"' + i.Name + '"');
-                            tw.WriteLine("price=");
-                            tw.Close();
-                        }
-
-                    }
+                    sb.Append(Encoding.UTF8.GetString(bit));
                 }
-                else
-                {
-                    Panel panel = new Panel();
-
-                    FastTxt(item.FullName);
-                }
-
+            }
+            string path = sb.ToString().Replace("\r\n", "").Replace(" ", "").Replace("\0", "");
+            try
+            {
+                Dir(path);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Каталог не обнаружен");
             }
         }
         //Чтение из Каталоа
@@ -101,12 +93,12 @@ namespace Importer_Exporter
                 var b = item.GetFiles();
                 if (b.Length > 0)
                 {
-                    if(i)
+                    if (i)
                     {
                         ViewTop += panel2.Width / 5 + 60;
                         ViewLeft = 0;
                     }
-                    
+
                     Label label = new Label();
                     label.Text = item.Name;
                     label.AutoSize = false;
@@ -130,9 +122,6 @@ namespace Importer_Exporter
                             {
                                 string s = null;
                                 byte[] bit = new byte[8];
-
-
-
                                 while (fs.Read(bit, 0, bit.Length) > 0)
                                 {
                                     sb.Append(Encoding.Default.GetString(bit));
@@ -141,7 +130,70 @@ namespace Importer_Exporter
                             IniFile iniFile = new IniFile(sb.ToString());
                             if (iniFile.Name.Length > 0)
                             {
-                                Push(iniFile, item);
+                                using (CatalogModel db = new CatalogModel())
+                                {
+
+                                    string folder = item.FullName + @"\" + iniFile.Image;
+                                    //MessageBox.Show(folder);
+                                    //Process.Start("explorer.exe", folder);
+                                    Image image = Image.FromFile(folder);
+
+                                    PictureBox picture = new PictureBox();
+                                    picture.Image = image;
+                                    picture.SizeMode = PictureBoxSizeMode.StretchImage;
+                                    picture.Width = (ViewWidth - Padding);
+                                    picture.Height = ViewWidth;
+                                    picture.Left = ViewLeft;
+                                    picture.Top = ViewTop;
+                                    //picture.BorderStyle = BorderStyle.FixedSingle;
+                                    panel2.Controls.Add(picture);
+
+                                    //Название
+                                    Label textBox = new Label();
+                                    textBox.Text = iniFile.Name;
+                                    textBox.Font = FName;
+                                    textBox.Width = (ViewWidth - Padding);
+                                    textBox.Top = ViewTop + ViewWidth;
+                                    textBox.Left = ViewLeft;
+                                    textBox.BackColor = ColorRandomizer();
+                                    textBox.ForeColor = Color.White;
+                                    textBox.TextAlign = ContentAlignment.MiddleCenter;
+                                    //textBox.BorderStyle = BorderStyle.FixedSingle;
+
+                                    panel2.Controls.Add(textBox);
+
+                                    //Цена
+                                    Label tb = new Label();
+                                    tb.Font = FPrice;
+                                    tb.Left = 0;
+                                    tb.Top = 5;
+                                    tb.Width = ViewWidth;
+                                    tb.BackColor = System.Drawing.Color.Transparent;
+                                    tb.Text = iniFile.Price.ToString() + '\u20BD';
+                                    tb.TextAlign = ContentAlignment.MiddleRight;
+                                    //tb.BorderStyle = BorderStyle.FixedSingle;
+                                    picture.Controls.Add(tb);
+
+                                    ViewLeft += (ViewWidth + Padding);
+                                    //Перенос на новую строку
+                                    if ((ViewLeft + Padding * 5) >= panel2.Width)
+                                    {
+                                        ViewTop += ViewWidth + tb.Height + textBox.Height;
+                                        ViewLeft = 0;
+
+                                    }
+
+                                    Catalog catalog = new Catalog();
+                                    MemoryStream ms = new MemoryStream();
+                                    image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                    byte[] jpg = ms.ToArray();
+                                    catalog.image = jpg;
+                                    catalog.Name = iniFile.Name;
+                                    catalog.Price = iniFile.Price;
+                                    catalog.Folder = item.FullName;
+                                    //db.Catalog.Add(catalog);
+                                    //db.SaveChanges();
+                                }
                             }
                         }
                         catch (Exception)
@@ -160,68 +212,10 @@ namespace Importer_Exporter
             }
         }
         //Отправка в БД и Рисовка
-        public void Push(IniFile ini, DirectoryInfo info)
+        public void Push(IniFile inifile, DirectoryInfo item)
         {
-            int Width = panel2.Width / 5;
-            using (CatalogModel db = new CatalogModel())
-            {
-                string folder = info.FullName + @"\" + ini.Image;
-                //MessageBox.Show(folder);
-                //Process.Start("explorer.exe", folder);
-                Image image = Image.FromFile(folder);
 
-                PictureBox picture = new PictureBox();
-                picture.Image = image;
-                picture.SizeMode = PictureBoxSizeMode.StretchImage;
-                picture.Width = Width;
-                picture.Height = Width;
-                picture.Left = ViewLeft;
-                picture.Top = ViewTop;
-                picture.BorderStyle = BorderStyle.FixedSingle;
-                panel2.Controls.Add(picture);
 
-                //Название
-                Label textBox = new Label();
-                textBox.Text = ini.Name;
-                textBox.Font = FName;
-                textBox.Width = Width;
-                textBox.Top = ViewTop + Width;
-                textBox.Left = ViewLeft;
-                textBox.TextAlign = ContentAlignment.MiddleCenter;
-                textBox.BorderStyle = BorderStyle.FixedSingle;
-
-                panel2.Controls.Add(textBox);
-
-                //Цена
-                Label tb = new Label();
-                
-                tb.Text = ini.Price.ToString() +'\u20BD';
-                tb.Font = FPrice;
-                tb.Left = ViewLeft;
-                tb.Width = Width;
-                tb.TextAlign = ContentAlignment.MiddleCenter;
-                tb.Top = ViewTop + Width + textBox.Height;
-                tb.BorderStyle = BorderStyle.FixedSingle;
-
-                panel2.Controls.Add(tb);
-                ViewLeft += Width;
-                if ((ViewLeft + 5) >= panel2.Width)
-                {
-                    ViewTop += Width + tb.Height + textBox.Height;
-                    ViewLeft = 0;
-                }
-
-                Catalog catalog = new Catalog();
-                MemoryStream ms = new MemoryStream();
-                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                byte[] jpg = ms.ToArray();
-                catalog.image = jpg;
-                catalog.Name = ini.Name;
-                catalog.Price = ini.Price;
-                catalog.Folder = info.FullName;
-                //db.Catalog.Add(catalog);
-                //db.SaveChanges();
-            }
         }
         private void Add()
         {
@@ -231,6 +225,32 @@ namespace Importer_Exporter
                 FileInfo fi = new FileInfo(ofd.FileName);
                 MessageBox.Show(fi.FullName);
             }
+        }
+        private Color ColorRandomizer()
+        {
+            Color color = new Color();
+            Random r = new Random(Guid.NewGuid().GetHashCode());
+            int rand = r.Next(0, 5);
+            switch (rand)
+            {
+                case 0:
+                    color = ColorTranslator.FromHtml("#f6a401");
+                    break;
+                case 1:
+                    color = ColorTranslator.FromHtml("#65b32e");
+                    break;
+                case 2:
+                    color = ColorTranslator.FromHtml("#773289");
+                    break;
+                case 3:
+                    color = ColorTranslator.FromHtml("#ab1d37");
+                    break;
+                case 4:
+                    color = ColorTranslator.FromHtml("#000000");
+                    break;
+
+            }
+            return color;
         }
         private void BtnWrite_Click(object sender, EventArgs e)
         {
@@ -311,7 +331,22 @@ namespace Importer_Exporter
             MessageBox.Show("Запись завершена");
         }
 
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            FormSettings form = new FormSettings();
+            form.ShowDialog();
+        }
+
+        private void BtnMenu_Click(object sender, EventArgs e)
+        {
+            Parallel.Invoke(() => Starter());
+
+        }
     }
 
     public class IniFile
